@@ -2,7 +2,7 @@ import streamlit as st
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
 # Load model and tokenizer
-model_name = "google/flan-t5-xxl"  # You can replace this with a smaller model if needed
+model_name = "google/flan-t5-large"  # You can replace this with a smaller model if needed
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
