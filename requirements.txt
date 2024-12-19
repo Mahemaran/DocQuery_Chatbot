@@ -11,3 +11,4 @@ torch
 faiss-cpu
 python-dotenv
 sentence_transformers
+langchain-huggingface
