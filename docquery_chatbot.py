@@ -27,11 +27,11 @@ def read_pdf(file):
 
 def read_csv(file):
     df = pd.read_csv(file)
-    return df
+    return df.to_string()
 
 def read_excel(file, sheet_name):
     df = pd.read_excel(file, sheet_name=sheet_name, engine='openpyxl')
-    return df
+    return df.to_string()
 
 def read_text(file):
     return file.read().decode("utf-8")
