@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from PyPDF2 import PdfReader
+import openpyxl
 from attr.validators import max_len
 from langchain.chains.question_answering import load_qa_chain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
