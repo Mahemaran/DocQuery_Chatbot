@@ -16,6 +16,8 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
+st.set_page_config(page_title="QA System", page_icon="📝", layout="centered")
+
 # Helper Functions for File Reading
 def read_pdf(file):
     reader = PdfReader(file)
@@ -48,7 +50,7 @@ def load_files(uploaded_files, file_type, sheet_name=None):
     return combined_text
 
 # Streamlit UI
-st.title("📝 AI-Powered Question Answering System 🤖")
+st.title("AI-Powered Question Answering System 🤖")
 
 # File Upload Section
 uploaded_files = st.file_uploader("Upload Files (Text, PDF, CSV, Excel)", type=["txt", "pdf", "csv", "xlsx"],
