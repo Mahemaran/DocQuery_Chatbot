@@ -30,7 +30,7 @@ def read_csv(file):
     return df
 
 def read_excel(file, sheet_name):
-    df = pd.read_excel(file, sheet_name=sheet_name)
+    df = pd.read_excel(file, sheet_name=sheet_name, engine='openpyxl')
     return df
 
 def read_text(file):
