@@ -102,7 +102,7 @@ if uploaded_files:
             # st.write("Storing embeddings in FAISS...")
             vector_db = FAISS.from_documents(documents, embedding=embeddings)
             with st.sidebar:
-                k_value = st.text_input("top matches","5")
+                k_value = st.number_input("top matches", min_value=1, value=5)
                 k_value = int(k_value)
             if not k_value:
                 st.warning("please enter top matches")
