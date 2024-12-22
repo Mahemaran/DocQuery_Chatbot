@@ -15,6 +15,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from transformers import AutoModelForCausalLM, AutoTokenizer
+from langchain_community.document_loaders import WebBaseLoader
 
 # page setup
 st.set_page_config(page_title="QA_Chatbot", page_icon="📝", layout="centered")
