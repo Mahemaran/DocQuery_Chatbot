@@ -11,4 +11,3 @@ langchain_groq
 langchain_core
 openpyxl
 faiss-cpu
-WebBaseLoader
