@@ -16,6 +16,7 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
+# page setup
 st.set_page_config(page_title="QA_Chatbot", page_icon="📝", layout="centered")
 
 # Helper Functions for File Reading
@@ -35,11 +36,21 @@ def read_excel(file, sheet_name):
 def read_text(file):
     return file.read().decode("utf-8")
 
+def read_website(url):
+    loader = WebBaseLoader(url)
+    docs = loader.load()
+    return "\n".join([doc.page_content for doc in docs])
+
+def is_url(path):
+    return path.lower().startswith(('http://', 'https://'))
+
 # File Handling Function
 def load_files(uploaded_files, file_type, sheet_name=None):
     combined_text = ""
     for uploaded_file in uploaded_files:
-        if file_type == "Text":
+        if file_type == "Url":
+            combined_text += read_website(uploaded_file)
+        elif file_type == "Text":
             combined_text += read_text(uploaded_file)
         elif file_type == "PDF":
             combined_text += read_pdf(uploaded_file)
@@ -53,20 +64,24 @@ def load_files(uploaded_files, file_type, sheet_name=None):
 st.title("AI-Powered Question Answering System 🤖")
 
 # File Upload Section
-uploaded_files = st.file_uploader("Upload Files (Text, PDF, CSV, Excel)", type=["txt", "pdf", "csv", "xlsx"],
+uploaded_files = st.file_uploader("Upload Files (Text, PDF, CSV, Excel, Url)", type=["txt", "pdf", "csv", "xlsx", "Url"],
                                   accept_multiple_files=True)
 if not uploaded_files:
     st.warning("Please upload file")
-# File Type Selection
 with st.sidebar:
-    file_type = st.sidebar.selectbox("Select File Type", ["Text", "PDF", "CSV", "Excel"])
+    file_type = st.sidebar.selectbox("Select File Type", ["Text", "PDF", "CSV", "Excel", "Url"])
+
+if file_type=="Url":
+    url_input = st.text_input("Enter your URL")
+    if url_input:
+        uploaded_files = [url_input]
+    else:
+        st.warning("Please enter a URL.")
 
 # Excel Sheet Selection
-    sheet_name = None
-    if file_type == "Excel":
-        sheet_name = st.sidebar.text_input("Enter Sheet Name (for Excel files)", "Sheet1")
-    if file_type == "CSV":
-        sheet_name = st.sidebar.text_input("Enter Sheet Name (for CSV files)", "Sheet1")
+sheet_name = None
+if file_type == "Excel":
+    sheet_name = st.sidebar.text_input("Enter Sheet Name (for Excel files)", "Sheet1")
 
 # Model Selection
 with st.sidebar:
@@ -75,13 +90,13 @@ with st.sidebar:
     ["gpt-3.5-turbo (OpenAI)", "gemini-pro (Google)", "tiiuae/falcon-7b-instruct (HuggingFace)", "llama3-8b-8192 (Groq)", "gpt2"])
 
 # API Key Input
-with st.sidebar:
-    api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
-    if not api_key:
-        st.warning("please enter your API key 🔑")
+if not "gpt2" in model_name:
+    with st.sidebar:
+        api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
+        if not api_key:
+            st.warning("please enter your API key 🔑")
 
 # Load Data and Split
-
 if uploaded_files:
     question = st.text_input("ask your question 😊")
     st.write(question)
@@ -96,7 +111,6 @@ if uploaded_files:
             documents = text_splitter.create_documents([combined_text])
 
             # Embedding Generation
-            # st.write("Generating embeddings...")
             embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
             # Vector Store Initialization (FAISS)
             # st.write("Storing embeddings in FAISS...")
