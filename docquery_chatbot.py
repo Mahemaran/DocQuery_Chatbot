@@ -145,11 +145,15 @@ if uploaded_files:
                             inputs = tokenizer(context_text, return_tensors="pt", truncation=True, max_length=512)
 
                             # Generate a response
+                            with st.sidebar:
+                                max_token = st.number_input("max_new_tokens", min_value=1, value=50)
+                                temperature = st.number_input("temperature", min_value=0.1, value=0.7)
+                                top_p = st.number_input("top_p", min_value=0.1, value=0.85)
                             outputs = model.generate(
                                 **inputs,
-                                max_new_tokens=50,  # Control response length
-                                temperature=0.8,  # Control randomness (lower = more deterministic)
-                                top_p=0.85,  # Nucleus sampling
+                                max_new_tokens=max_token,  # Control response length
+                                temperature=temperature,  # Control randomness (lower = more deterministic)
+                                top_p=top_p,  # Nucleus sampling
                                 do_sample=True,  # Enable sampling
                                 repetition_penalty=1.2,  # Penalize repetition
                                 pad_token_id=tokenizer.eos_token_id,  # Padding token
