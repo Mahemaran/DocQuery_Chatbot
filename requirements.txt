@@ -8,8 +8,6 @@ faiss-cpu
 unstructured[pdf]
 python-multipart
 langchain
-hashlib
-shutil
 
 
 #streamlit
