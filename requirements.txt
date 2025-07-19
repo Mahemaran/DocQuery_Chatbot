@@ -1,7 +1,7 @@
 streamlit
-auto_loader
+auto-doc-loader==0.1.0
+semantic_splitter==0.1.1
 langchain_google_genai
-semantic_splitter
 pandas
 langchain-community
 faiss-cpu
