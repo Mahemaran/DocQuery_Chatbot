@@ -11,7 +11,8 @@ os.makedirs(INDEX_DIR, exist_ok=True)
 
 st.title("Your intelligent assistant for document processing, Q&A")
 
-uploaded_file = st.file_uploader("Upload a document")
+uploaded_file = st.file_uploader(
+    "Upload a document", type=["pdf", "txt", "xlsx", "csv", "pptx", "eml"])
 query = st.text_input("Enter your question")
 with st.sidebar:
     api_key = st.text_input("Enter your Gemini API Key", type="password")
