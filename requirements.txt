@@ -26,3 +26,6 @@ unstructured[pptx]
 #openpyxl
 #faiss-cpu
 #beautifulsoup4
+#AIzaSyCRxJydHBgybN-UhizqEljv7sF3CmS3_DM
+#AIzaSyCi-xZpB9SaGuOOkg1yD9gtns64gRVKJBo
+#AIzaSyDUscDBW8I007aNodQhGvCh-KWwybzEPZo
